@@ -1390,7 +1390,7 @@ int SimCmdPlatform(ARGS)
 
 int SimCmdVersion(ARGS)
 {
-  sprintf(interp->result, MicropolisVersion);
+  sprintf(interp->result, "%s", MicropolisVersion);
 
   return (TCL_OK);
 }
