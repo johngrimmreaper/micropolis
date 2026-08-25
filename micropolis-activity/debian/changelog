@@ -1,0 +1,18 @@
+micropolis-activity (0.0.20260210+gitc98f6b0-1) unstable; urgency=medium
+
+  * Package the current upstream master snapshot at commit c98f6b0.
+  * Rebuild the Debian packaging for current Debian systems.
+  * Preserve the historical micropolis/micropolis-data package split and
+    filesystem layout for upgrade compatibility.
+  * Build with the Debian toolchain, dpkg-buildflags, hardening flags and
+    cross-toolchain variables instead of the upstream hard-coded compiler
+    and /usr/X11R6 paths.
+  * Stop stripping binaries during the upstream build so debhelper can
+    produce normal debug information.
+  * Drop the obsolete x11proto-xext-dev transitional dependency.
+  * Use system DejaVu fonts rather than shipping duplicate font files.
+  * Fix legacy C declarations required by modern compilers.
+  * Add desktop integration, doc-base registration and an Xvfb autopkgtest.
+  * Document the current Micropolis public-name trademark license.
+
+ -- Reaper <johngrimmreaper@disroot.org>  Tue, 25 Aug 2026 00:00:00 -0300

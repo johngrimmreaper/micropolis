@@ -1,0 +1,3 @@
+src/sim/sim usr/lib/games/micropolis
+debian/micropolis.desktop usr/share/applications
+Micropolis.png usr/share/pixmaps

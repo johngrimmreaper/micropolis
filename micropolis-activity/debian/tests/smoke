@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+test -x /usr/games/micropolis
+test -x /usr/lib/games/micropolis/sim
+test -f /usr/share/games/micropolis/res/micropolis.tcl
+test -L /usr/share/games/micropolis/res/dejavu-lgc/DejaVuLGCSans.ttf
+
+log="$(mktemp)"
+trap 'rm -f "$log"' EXIT
+
+set +e
+timeout 8s xvfb-run -a /usr/games/micropolis >"$log" 2>&1
+status=$?
+set -e
+
+# A healthy interactive launch remains alive until timeout. Any earlier exit
+# indicates a startup failure and its diagnostics are useful to autopkgtest.
+if [ "$status" -ne 124 ]; then
+	cat "$log" >&2
+	exit "$status"
+fi

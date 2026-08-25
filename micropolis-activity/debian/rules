@@ -1,0 +1,63 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+include /usr/share/dpkg/architecture.mk
+include /usr/share/dpkg/buildflags.mk
+
+CC := $(DEB_HOST_GNU_TYPE)-gcc
+AR := $(DEB_HOST_GNU_TYPE)-ar
+RANLIB := $(DEB_HOST_GNU_TYPE)-ranlib
+YACC := bison -y
+LEGACY_CFLAGS := -std=gnu89
+
+TCL_CFLAGS := $(CPPFLAGS) $(CFLAGS) $(LEGACY_CFLAGS) -I. -DTCL_LIBRARY=\"/usr/share/games/micropolis/res\" -DIS_LINUX
+TK_CFLAGS := $(CPPFLAGS) $(CFLAGS) $(LEGACY_CFLAGS) -I. -I/usr/include/X11 -I../tcl -DTK_VERSION=\"2.3\" -DUSE_XPM3 -DIS_LINUX
+TCLX_SYS_FLAGS := -DTCL_HAVE_SETLINEBUF -DTCL_32_BIT_RANDOM -DTCL_POSIX_SIG -DTCL_TM_GMTOFF -DTCL_IEEE_FP_MATH
+SIM_CFLAGS := $(CFLAGS) $(LEGACY_CFLAGS) -DIS_LINUX -DNO_AIRCRASH
+SIM_CPPFLAGS := $(CPPFLAGS) -Iheaders -I../tcl -I../tclx/src -I../tk -I/usr/include/X11
+
+%:
+	dh $@ --no-parallel
+
+override_dh_auto_build:
+	$(MAKE) -C src/tcl \
+		CC="$(CC)" AR="$(AR)" RANLIB="$(RANLIB)" \
+		CFLAGS='$(TCL_CFLAGS)'
+	$(MAKE) -C src/tk \
+		CC="$(CC)" AR="$(AR)" RANLIB="$(RANLIB)" \
+		CFLAGS='$(TK_CFLAGS)' XINCLUDE=/usr/include/X11 \
+		XLIB='-lX11 -lXpm'
+	$(MAKE) -C src/tclx \
+		CC="$(CC)" AR="$(AR)" \
+		OPTIMIZE_FLAG='$(CFLAGS) $(LEGACY_CFLAGS) -DIS_LINUX' \
+		XCFLAGS='$(CPPFLAGS)' XLDFLAGS='$(LDFLAGS)' \
+		XPM_LIBS='-lXpm' RANLIB_CMD="$(RANLIB)" YACC='$(YACC)' \
+		TCL_TK_LIBS='-lX11 -lm -lXpm' SYS_DEP_FLAGS='$(TCLX_SYS_FLAGS)'
+	$(MAKE) -C src/sim \
+		CC="$(CC)" CFLAGS='$(SIM_CFLAGS)' CPPFLAGS='$(SIM_CPPFLAGS)' \
+		LDFLAGS='$(LDFLAGS)' XLIB=/usr/lib/$(DEB_HOST_MULTIARCH)
+
+override_dh_auto_install:
+	# Installation is intentionally declarative through debian/*.install.
+
+override_dh_install:
+	dh_install
+	install -D -m0755 debian/micropolis.launcher debian/micropolis/usr/games/micropolis
+	# Use the distribution's DejaVu fonts via symlinks and never ship the
+	# historical embedded copies.
+	rm -rf debian/micropolis-data/usr/share/games/micropolis/res/dejavu-lgc
+	# res/sim is an upstream build by-product; the executable belongs to
+	# /usr/lib/games/micropolis and is installed by micropolis.install.
+	rm -f debian/micropolis-data/usr/share/games/micropolis/res/sim
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 0755 debian/micropolis-data/usr/share/games/micropolis/res/sounds/player
+
+override_dh_auto_clean:
+	$(MAKE) -C src/sim clean || true
+	$(MAKE) -C src/tcl clean || true
+	$(MAKE) -C src/tk clean || true
+	$(MAKE) -C src/tclx clean || true
+	rm -f res/sim
