@@ -60,6 +60,7 @@
  * NOT APPLY TO YOU.
  */
 #include "sim.h"
+#include "simscan.h"
 
 
 /* Map Updates */
@@ -144,7 +145,7 @@ GetPDen(int Ch9)
   register int pop;
 
   if (Ch9 == FREEZ) {
-    pop = DoFreePop(Ch9);
+    pop = DoFreePop();
     return (pop);
   }
   if (Ch9 < COMBASE) {
