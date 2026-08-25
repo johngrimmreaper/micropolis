@@ -44,6 +44,9 @@ made.tmp: $(OBJS)
 	$(AR) cr ../libtk.a $(LIBOBJS)
 	touch made.tmp
 
+tkevent.o: tkevent.c tclxtkucb.h
+	$(CC) -c $(CFLAGS) -include tclxtkucb.h tkevent.c
+
 #------------------------------------------------------------------------------
 
 clean:
