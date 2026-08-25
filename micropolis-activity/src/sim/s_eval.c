@@ -62,6 +62,18 @@
 #include "sim.h"
 
 
+extern int GetAssValue(void);
+extern int DoPopNum(void);
+extern int DoProblems(void);
+extern int GetScore(void);
+extern int DoVotes(void);
+extern int EvalInit(void);
+extern int AverageTrf(void);
+extern int GetUnemployment(void);
+extern int GetFire(void);
+extern int VoteProblems(void);
+
+
 /* City Evaluation */
 
 
