@@ -1,0 +1,146 @@
+name: Micropolis local source build and install
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: Source branch, tag, or commit to build and install
+        required: true
+        default: integration/linux-modern-fixes
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: micropolis-source-install-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  source-install:
+    name: Build and install exact source ref
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    env:
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+      - name: Check out requested Micropolis source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source_ref }}
+          path: source
+          persist-credentials: false
+
+      - name: Verify exact clean source checkout
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          test -z "$(git -C source status --porcelain)"
+          source_sha="$(git -C source rev-parse HEAD)"
+          echo "SOURCE_SHA=$source_sha" >> "$GITHUB_ENV"
+          echo "Requested source ref: ${{ inputs.source_ref }}"
+          echo "Resolved source SHA: $source_sha"
+
+      - name: Show build environment
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          echo "=== operating system ==="
+          cat /etc/os-release
+          echo
+          echo "=== architecture ==="
+          dpkg --print-architecture
+          echo
+          echo "=== kernel ==="
+          uname -a
+          echo
+          echo "=== CPUs ==="
+          nproc
+          echo
+          echo "=== disk ==="
+          df -h "$GITHUB_WORKSPACE"
+          echo
+          echo "=== Micropolis source ==="
+          echo "ref: ${{ inputs.source_ref }}"
+          echo "sha: $SOURCE_SHA"
+
+      - name: Install source-build dependencies
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          sudo apt-get -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::Retries=3 install -y \
+            --no-install-recommends \
+            build-essential \
+            bison \
+            file \
+            libsdl-mixer1.2-dev \
+            libx11-dev \
+            libxext-dev \
+            libxpm-dev \
+            xvfb \
+            xauth
+
+      - name: Build directly from source
+        shell: bash
+        working-directory: source/micropolis-activity
+        run: |
+          set -Eeuo pipefail
+
+          make
+
+          test -x res/sim
+          file res/sim
+
+      - name: Install using upstream default prefix
+        shell: bash
+        working-directory: source/micropolis-activity
+        run: |
+          set -Eeuo pipefail
+
+          sudo make install
+
+          test -x /usr/local/bin/micropolis
+          test -x /usr/local/libexec/sim
+          test -x /usr/local/share/micropolis/res/sounds/player
+          test -f /usr/local/share/micropolis/res/micropolis.tcl
+          test -f /usr/local/share/applications/micropolis.desktop
+          test -f /usr/local/share/pixmaps/micropolis.png
+
+          echo "=== installed files ==="
+          find /usr/local/share/micropolis -maxdepth 2 -type f -printf '%p\n' | sort | head -100
+
+      - name: Runtime smoke test of source installation
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          set +e
+          timeout 8s xvfb-run -a /usr/local/bin/micropolis >/tmp/micropolis-source.log 2>&1
+          status=$?
+          set -e
+
+          if [ "$status" -ne 124 ]; then
+              cat /tmp/micropolis-source.log
+              echo "ERROR: source-installed Micropolis exited unexpectedly with status $status" >&2
+              exit 1
+          fi
+
+      - name: Uninstall and verify cleanup
+        shell: bash
+        working-directory: source/micropolis-activity
+        run: |
+          set -Eeuo pipefail
+
+          sudo make uninstall
+
+          test ! -e /usr/local/bin/micropolis
+          test ! -e /usr/local/libexec/sim
+          test ! -e /usr/local/share/micropolis
+          test ! -e /usr/local/share/applications/micropolis.desktop
+          test ! -e /usr/local/share/pixmaps/micropolis.png
