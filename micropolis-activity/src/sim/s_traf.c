@@ -60,6 +60,7 @@
  * NOT APPLY TO YOU.
  */
 #include "sim.h"
+#include "simtraf.h"
 
 
 /* Traffic Generation */
