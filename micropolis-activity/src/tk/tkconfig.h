@@ -45,6 +45,9 @@
 #include <sys/file.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#ifdef IS_LINUX
+#   include <unistd.h>
+#endif
 #ifndef _TCL
 #   include <tcl.h>
 #endif
