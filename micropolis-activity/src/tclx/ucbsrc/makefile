@@ -25,7 +25,7 @@ SHELL=/bin/sh
 #------------------------------------------------------------------------------
 
 CFLAGS=$(OPTIMIZE_FLAG) $(XCFLAGS) -I../$(TCL_UCB_DIR) $(MEM_DEBUG_FLAGS) \
-  $(SYS_DEP_FLAGS)
+  $(SYS_DEP_FLAGS) -include tclxucb.h
 
 #------------------------------------------------------------------------------
 
