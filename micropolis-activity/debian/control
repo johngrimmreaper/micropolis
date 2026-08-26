@@ -1,0 +1,41 @@
+Source: micropolis-activity
+Section: games
+Maintainer: Reaper <johngrimmreaper@disroot.org>
+Build-Depends:
+ bison,
+ debhelper-compat (= 13),
+ libsdl-mixer1.2-dev,
+ libx11-dev,
+ libxext-dev,
+ libxpm-dev
+Standards-Version: 4.7.3
+Rules-Requires-Root: no
+Homepage: https://github.com/SimHacker/micropolis
+Vcs-Git: https://github.com/johngrimmreaper/micropolis.git -b packaging/debian-modern
+Vcs-Browser: https://github.com/johngrimmreaper/micropolis/tree/packaging/debian-modern/micropolis-activity
+
+Package: micropolis
+Architecture: any
+Depends:
+ micropolis-data (= ${source:Version}),
+ ${misc:Depends},
+ ${shlibs:Depends}
+Recommends: alsa-utils
+Description: classic real-time city management simulator
+ Micropolis is the historical X11/Tcl/Tk city simulation released as free
+ software by Electronic Arts and maintained by Don Hopkins. This package
+ contains the native simulator executable and launcher.
+ .
+ The data, scenarios, graphics, sounds and manual are shipped separately in
+ micropolis-data.
+
+Package: micropolis-data
+Architecture: all
+Depends:
+ fonts-dejavu-core,
+ ${misc:Depends}
+Suggests: micropolis
+Description: classic real-time city management simulator - data
+ This package contains the architecture-independent data for the classic
+ Micropolis X11/Tcl/Tk city simulator, including scenarios, graphics, sounds,
+ Tcl resources and the original HTML manual.

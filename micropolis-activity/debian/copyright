@@ -1,0 +1,61 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Micropolis
+Source: https://github.com/SimHacker/micropolis
+Comment:
+ This package covers the historical micropolis-activity X11/Tcl/Tk subtree.
+ The Micropolis name is separately governed by the upstream Public Name
+ License included as debian/MicropolisPublicNameLicense.md.
+
+Files: *
+Copyright: 1989-2007 Electronic Arts Inc.
+           2007-2009 Don Hopkins and contributors
+License: GPL-3+ with EA-additional-terms
+ This program is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the Free
+ Software Foundation, either version 3 of the License, or (at your option)
+ any later version.
+ .
+ On Debian systems the complete text of the GNU General Public License
+ version 3 can be found in /usr/share/common-licenses/GPL-3.
+ .
+ ADDITIONAL TERMS per GNU GPL Section 7:
+ No trademark or publicity rights are granted. This license does not give
+ any right, title or interest in the SimCity trademark or any other
+ Electronic Arts trademark. Modified versions may not be distributed using
+ those trademarks or claim affiliation with Electronic Arts.
+ .
+ Any propagation or conveyance of this program must include the upstream
+ copyright notice and these terms. Modified versions must be marked as such
+ and must not be represented as the original program. The complete upstream
+ notice and warranty disclaimer are retained in README and the source files.
+
+Files: src/tcl/* src/tk/* res/tclinit.tcl res/tkerror.tcl
+Copyright: 1987-1992 Regents of the University of California
+License: BSD-TclTk
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted, provided
+ that the above copyright notice appear in all copies. The University of
+ California makes no representations about the suitability of this software
+ for any purpose. It is provided "as is" without express or implied warranty.
+
+Files: src/tclx/*
+Copyright: 1992 Karl Lehenbauer and Mark Diekhans
+License: TclX
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted, provided
+ that the above copyright notice appear in all copies. Karl Lehenbauer and
+ Mark Diekhans make no representations about the suitability of this software
+ for any purpose. It is provided "as is" without express or implied warranty.
+
+Files: res/dejavu-lgc/*
+Copyright: 2003 Bitstream, Inc.
+License: Bitstream-Vera
+ The fonts in this directory are not installed by this Debian package. System
+ DejaVu fonts are used instead. The original license text remains in the
+ upstream source tree.
+
+Files: debian/*
+Copyright: 2026 Reaper <johngrimmreaper@disroot.org>
+License: GPL-3+
+ On Debian systems the complete text of the GNU General Public License
+ version 3 can be found in /usr/share/common-licenses/GPL-3.

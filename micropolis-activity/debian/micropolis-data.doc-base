@@ -1,0 +1,9 @@
+Document: micropolis
+Title: Micropolis Manual
+Author: Electronic Arts Inc. and Don Hopkins
+Abstract: Original manual for the classic Micropolis city simulator.
+Section: Games/Simulation
+
+Format: HTML
+Index: /usr/share/games/micropolis/manual/index.html
+Files: /usr/share/games/micropolis/manual/*.html

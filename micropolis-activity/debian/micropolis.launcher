@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+SIMHOME=/usr/share/games/micropolis
+export SIMHOME
+
+cd "$SIMHOME"
+exec /usr/lib/games/micropolis/sim "$@"

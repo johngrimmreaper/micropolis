@@ -1,0 +1,29 @@
+Micropolis for Debian
+=====================
+
+This package is built from the current master branch of the original
+SimHacker/micropolis repository, snapshot at commit c98f6b0 from 2026-02-10.
+The classic X11/Tcl/Tk implementation packaged here lives in the
+micropolis-activity subtree of that repository.
+
+The packaging is a clean modernization of Debian's historical 2007-snapshot
+package.  It deliberately keeps the old binary package names and game data
+locations for compatibility, while rebuilding with current Debian toolchain
+flags and fixing modern compiler issues.
+
+The bundled Tcl 6.x, Tk 2.x and TclX sources are part of this historical game.
+They are intentionally built privately into the simulator rather than replaced
+with current system Tcl/Tk, because doing so would be a source port rather than
+a packaging update.
+
+Trademark notice
+----------------
+
+Micropolis is a registered trademark of Micropolis Corporation (Micropolis
+GmbH) and is licensed here as a courtesy of the owner.
+
+The upstream Micropolis Public Name License, version 1 (2024-10-01), restricts
+use of the Micropolis name and requires propagation of that license.  Debian
+removed its former micropolis-activity package from unstable on 2026-04-07 for
+trademark reasons.  Read MicropolisPublicNameLicense.md before redistributing a
+package under this name, especially for commercial use.
