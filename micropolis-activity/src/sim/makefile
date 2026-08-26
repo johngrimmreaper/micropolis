@@ -95,6 +95,9 @@ ALLOBJS = $(OBJS)
 
 all: sim
 
+w_eval.o: override CFLAGS += -include headers/simuieval.h
+w_eval.o: headers/simuieval.h
+
 lint:
 	alint $(INCLUDES) $(SRCS) > LINT
 
