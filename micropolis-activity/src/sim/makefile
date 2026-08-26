@@ -95,6 +95,9 @@ ALLOBJS = $(OBJS)
 
 all: sim
 
+w_keys.o: override CFLAGS += -include headers/simkeys.h
+w_keys.o: headers/simkeys.h
+
 lint:
 	alint $(INCLUDES) $(SRCS) > LINT
 
