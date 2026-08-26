@@ -95,6 +95,9 @@ ALLOBJS = $(OBJS)
 
 all: sim
 
+s_zone.o: override CFLAGS += -include headers/simzone.h
+s_zone.o: headers/simzone.h
+
 lint:
 	alint $(INCLUDES) $(SRCS) > LINT
 
