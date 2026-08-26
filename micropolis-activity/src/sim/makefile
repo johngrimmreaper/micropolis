@@ -95,6 +95,9 @@ ALLOBJS = $(OBJS)
 
 all: sim
 
+g_map.o: override CFLAGS += -include headers/simmapdraw.h
+g_map.o: headers/simmapdraw.h
+
 lint:
 	alint $(INCLUDES) $(SRCS) > LINT
 
