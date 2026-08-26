@@ -11,8 +11,8 @@ Build-Depends:
 Standards-Version: 4.7.3
 Rules-Requires-Root: no
 Homepage: https://github.com/SimHacker/micropolis
-Vcs-Git: https://github.com/johngrimmreaper/micropolis.git -b packaging/debian-modern
-Vcs-Browser: https://github.com/johngrimmreaper/micropolis/tree/packaging/debian-modern/micropolis-activity
+Vcs-Git: https://github.com/johngrimmreaper/micropolis.git -b debian/sid
+Vcs-Browser: https://github.com/johngrimmreaper/micropolis/tree/debian/sid/micropolis-activity
 
 Package: micropolis
 Architecture: any
