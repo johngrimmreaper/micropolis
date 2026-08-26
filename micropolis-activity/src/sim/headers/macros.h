@@ -125,3 +125,5 @@
 	((tile == 0) || \
 	 (tile & BURNBIT) || \
          TILE_IS_RUBBLE(tile))
+
+#include "simfuncs.h"

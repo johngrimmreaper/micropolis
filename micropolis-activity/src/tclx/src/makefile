@@ -57,6 +57,9 @@ tclxgdat.c: tclxgdat.y
 	$(YACC) tclxgdat.y
 	mv y.tab.c tclxgdat.c
 
+tclxgdat.o: tclxgdat.c tclxyacc.h
+	$(CC) -c $(CFLAGS) -include tclxyacc.h tclxgdat.c
+
 ../tcl: ../libtcl.a made.tmp 
 	$(RANLIB_CMD) ../libtcl.a
 	$(CC) $(CFLAGS) main.o ../libtcl.a $(LIBS) $(XLDFLAGS) -o ../tcl

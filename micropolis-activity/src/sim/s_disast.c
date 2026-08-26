@@ -62,6 +62,25 @@
 #include "sim.h"
 
 
+extern int ScenarioDisaster(void);
+extern int SetFire(void);
+extern int MakeFlood(void);
+extern int MakeAirCrash(void);
+extern int MakeTornado(void);
+extern int MakeEarthquake(void);
+extern int MakeMonster(void);
+extern int DropFireBombs(void);
+extern int MakeMeltdown(void);
+extern int DoMeltdown();
+extern int MakeExplosion(int x, int y);
+extern int ClearMes(void);
+extern void SendMesAt(short Mnum, short x, short y);
+extern int DoEarthQuake();
+extern int Vunerable(int tem);
+extern int Rand16(void);
+extern int FireZone(int Xloc, int Yloc, int ch);
+
+
 /* Disasters */
 
 

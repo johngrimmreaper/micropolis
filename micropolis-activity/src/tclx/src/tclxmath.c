@@ -17,6 +17,7 @@
  */
 
 #include "tclxint.h"
+#include <time.h>
 
 extern int rand();
 

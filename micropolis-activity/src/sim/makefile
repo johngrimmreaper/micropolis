@@ -95,6 +95,39 @@ ALLOBJS = $(OBJS)
 
 all: sim
 
+s_sim.o: override CFLAGS += -include headers/simsim.h
+s_sim.o: headers/simsim.h
+
+s_zone.o: override CFLAGS += -include headers/simzone.h
+s_zone.o: headers/simzone.h
+
+s_fileio.o: override CFLAGS += -include headers/simfileio.h
+s_fileio.o: headers/simfileio.h
+
+g_setup.o: override CFLAGS += -include headers/simsetup.h
+g_setup.o: headers/simsetup.h
+
+g_map.o: override CFLAGS += -include headers/simmapdraw.h
+g_map.o: headers/simmapdraw.h
+
+w_stubs.o: override CFLAGS += -include headers/simstubs.h
+w_stubs.o: headers/simstubs.h
+
+w_sound.o: override CFLAGS += -include headers/simsound.h
+w_sound.o: headers/simsound.h
+
+w_keys.o: override CFLAGS += -include headers/simkeys.h
+w_keys.o: headers/simkeys.h
+
+w_con.o: override CFLAGS += -include headers/simcon.h
+w_con.o: headers/simcon.h
+
+w_eval.o: override CFLAGS += -include headers/simuieval.h
+w_eval.o: headers/simuieval.h
+
+w_budget.o: override CFLAGS += -include headers/simbudget.h
+w_budget.o: headers/simbudget.h
+
 lint:
 	alint $(INCLUDES) $(SRCS) > LINT
 
