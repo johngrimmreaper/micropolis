@@ -95,6 +95,9 @@ ALLOBJS = $(OBJS)
 
 all: sim
 
+s_fileio.o: override CFLAGS += -include headers/simfileio.h
+s_fileio.o: headers/simfileio.h
+
 lint:
 	alint $(INCLUDES) $(SRCS) > LINT
 
